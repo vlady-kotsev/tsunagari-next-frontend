@@ -1,4 +1,4 @@
-/** 
+/**
  * Represents a token transfer transaction between chains
  * @interface Transfer
  */
@@ -39,6 +39,7 @@ export interface Network {
  * @interface Token
  */
 export interface Token {
+  id: number;
   /** Token contract address */
   address: string;
   /** Human-readable name of the token */

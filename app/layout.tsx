@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
 import { Providers } from "@/components/providers";
+import { Toaster } from "@/components/ui/sonner";
 
 const bebasNeue = localFont({
   src: [
@@ -53,7 +54,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${bebasNeue.className} antialiased bg-gray-900`}>
         <Providers>{children}</Providers>
-        <canvas id="canvas"></canvas>
+        <Toaster /> 
       </body>
     </html>
   );

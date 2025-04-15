@@ -16,7 +16,7 @@ export default function MouseFollower() {
   return (
     <>
       <div
-        className="fixed w-10 h-10  border-2 border-primary rounded-full transition-transform duration-90"
+        className="fixed w-10 h-10  border-2 border-primary rounded-full transition-transform duration-90 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-20px",
@@ -24,7 +24,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-9 h-9  border-2 border-primary rounded-full transition-transform duration-100"
+        className="fixed w-9 h-9  border-2 border-primary rounded-full transition-transform duration-100 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-18px",
@@ -32,7 +32,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-8 h-8  border-2 border-primary rounded-full transition-transform duration-110"
+        className="fixed w-8 h-8  border-2 border-primary rounded-full transition-transform duration-110 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-16px",
@@ -40,7 +40,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-7 h-7  border-2 border-primary rounded-full transition-transform duration-120"
+        className="fixed w-7 h-7  border-2 border-primary rounded-full transition-transform duration-120 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-14px",
@@ -48,7 +48,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-6 h-6  border-2 border-primary rounded-full transition-transform duration-130"
+        className="fixed w-6 h-6  border-2 border-primary rounded-full transition-transform duration-130 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-12px",
@@ -56,7 +56,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-5 h-5  border-2 border-primary rounded-full transition-transform duration-140"
+        className="fixed w-5 h-5  border-2 border-primary rounded-full transition-transform duration-140 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-10px",
@@ -64,7 +64,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-4 h-4  border-2 border-primary rounded-full transition-transform duration-150"
+        className="fixed w-4 h-4  border-2 border-primary rounded-full transition-transform duration-150 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-8px",
@@ -72,7 +72,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-3 h-3  border-2 border-primary rounded-full transition-transform duration-160"
+        className="fixed w-3 h-3  border-2 border-primary rounded-full transition-transform duration-160 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-6px",
@@ -80,7 +80,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-2 h-2  border-2 border-primary rounded-full transition-transform duration-170"
+        className="fixed w-2 h-2  border-2 border-primary rounded-full transition-transform duration-170 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-4px",
@@ -88,7 +88,7 @@ export default function MouseFollower() {
         }}
       />
       <div
-        className="fixed w-1 h-1  border-2 border-primary rounded-full transition-transform duration-180"
+        className="fixed w-1 h-1  border-2 border-primary rounded-full transition-transform duration-180 pointer-events-none"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
           left: "-2px",

@@ -1,12 +1,18 @@
 import TransactionsTable from "@/components/table/table";
-import WalletButton from "@/components/wallet/Wallet";
+import Wallet from "@/components/wallet/Wallet";
 import Image from "next/image";
 import { eduFont } from "../layout";
 import Link from "next/link";
 import TransactionForm from "@/components/transactionForm/TransactionForm";
 import MouseFollower from "@/components/mouseFollower/mouseFollower";
 
-export default function Page() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { page?: string };
+}) {
+  
+
   return (
     <div className="mt-5 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <header className="mt-15 w-full flex justify-between items-center px-4">
@@ -21,7 +27,7 @@ export default function Page() {
           Tsunagari
         </h1>
         <div>
-          <WalletButton />
+          <Wallet />
         </div>
       </header>
       <main className="flex flex-col">
@@ -30,7 +36,7 @@ export default function Page() {
           <TransactionForm />
         </section>
         <section>
-          <TransactionsTable />
+          <TransactionsTable searchParams={searchParams} />
         </section>
       </main>
     </div>
