@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="" alt="logo" />
-  <h1>Tsunagari/つながり - frontend</h1>
+  <img width="400" src="https://github.com/user-attachments/assets/d7d626fe-b199-4db2-a063-9b6147f62fd4" alt="logo" />
+  <h1>Tsunagari/つながり - next frontend</h1>
   
 </div>
 
@@ -15,7 +15,7 @@
 ## Overview
 
 **Tsunagari**(to connect) frontend is a NextJS App for bridging tokens between blockchains.
-<img src="" alt="screenshot" />
+<img src="https://github.com/user-attachments/assets/27907a54-5bc5-4679-8107-11c2a20dc98a" alt="screenshot" />
 
 ## Features
 
