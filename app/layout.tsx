@@ -54,7 +54,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${bebasNeue.className} antialiased bg-gray-900`}>
         <Providers>{children}</Providers>
-        <Toaster /> 
+        <Toaster />
       </body>
     </html>
   );

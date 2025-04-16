@@ -168,3 +168,7 @@ input::-webkit-inner-spin-button {
     @apply bg-background text-foreground;
   }
 }
+
+nextjs-portal {
+  display: none;
+}

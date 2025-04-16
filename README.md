@@ -22,7 +22,9 @@
 - The system uses **ethersjs** to interact with the blockchain.
 - The system is easily extendable to support new chains.
 - The system adopts cool minimal green aesthetic.
-
+## Integrated services
+- Sanity CMS
+- Sentry Error Monitoring
 ## Startup
 
 Starting a local setup of Tsunagari: https://github.com/vlady-kotsev/tsunagari-local
@@ -34,6 +36,7 @@ Place env variables in `.env`
 **NEXT_PUBLIC_API_URL**
 **NEXT_PUBLIC_SANITY_PROJECT_ID**
 **NEXT_PUBLIC_SANITY_DATASET**
+**SENTRY_AUTH_TOKEN**
 
 ## License
 
