@@ -5,7 +5,7 @@ import { Transfer, Network, Token, PaginatedResponse } from "./interfaces";
  */
 class DataService {
   private readonly HTTP_BASE_URL: string =
-    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+    process.env.NEXT_PUBLIC_API_URL || "http://172.17.0.1:3000";
 
   /**
    * Retrieves a paginated list of transfers.

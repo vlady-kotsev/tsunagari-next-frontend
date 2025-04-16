@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import DataService from "@/services/data.service/data.service";
+// import DataService from "@/services/data.service/data.service";
 import { Network, Token } from "@/services/data.service/interfaces";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -18,13 +18,13 @@ import { ethers } from "ethers";
 import bridgeAbi from "./abi/diamond.json";
 import erc20Abi from "./abi/erc20.json";
 
-const TransactionForm = () => {
-  const [networks, setNetworks] = useState<Map<number, Network>>(
-    new Map<number, Network>()
-  );
-  const [tokensPerNetwork, setTokensPerNetwork] = useState<
-    Map<number, Token[]>
-  >(new Map<number, Token[]>());
+const TransactionForm = ({networks, tokens}:{networks: Map<number, Network>, tokens: Token[] }) => {
+  // const [networks, setNetworks] = useState<Map<number, Network>>(
+  //   new Map<number, Network>()
+  // );
+  // const [tokensPerNetwork, setTokensPerNetwork] = useState<
+  //   Map<number, Token[]>
+  // >(new Map<number, Token[]>());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [destinationChain, setDestinationChain] = useState<number | null>(null);
@@ -41,42 +41,42 @@ const TransactionForm = () => {
 
     setOriginChain(metamaskChainId);
 
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const [networkResponse, tokensResponse] = await Promise.all([
-          DataService.getAllNetworks(),
-          DataService.getAllTokens(),
-        ]);
+    // const fetchData = async () => {
+    //   setIsLoading(true);
+    //   try {
+    //     const [networkResponse, tokensResponse] = await Promise.all([
+    //       DataService.getAllNetworks(),
+    //       DataService.getAllTokens(),
+    //     ]);
 
-        const networkMap = new Map<number, Network>();
+    //     const networkMap = new Map<number, Network>();
 
-        networkResponse.items.forEach((network) => {
-          networkMap.set(network.chainId, network);
-        });
-        setNetworks(networkMap);
+    //     networkResponse.items.forEach((network) => {
+    //       networkMap.set(network.chainId, network);
+    //     });
+    //     setNetworks(networkMap);
 
-        const tokensPerNetworkMap = new Map<number, Token[]>();
-        tokensResponse.items.forEach((token) => {
-          const networkId = token.chainId;
-          if (!tokensPerNetworkMap.has(networkId)) {
-            tokensPerNetworkMap.set(networkId, []);
-          }
-          tokensPerNetworkMap.get(networkId)?.push(token);
-        });
-        setTokensPerNetwork(tokensPerNetworkMap);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred");
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    //     const tokensPerNetworkMap = new Map<number, Token[]>();
+    //     tokensResponse.items.forEach((token) => {
+    //       const networkId = token.chainId;
+    //       if (!tokensPerNetworkMap.has(networkId)) {
+    //         tokensPerNetworkMap.set(networkId, []);
+    //       }
+    //       tokensPerNetworkMap.get(networkId)?.push(token);
+    //     });
+    //     setTokensPerNetwork(tokensPerNetworkMap);
+    //   } catch (err: unknown) {
+    //     if (err instanceof Error) {
+    //       setError(err.message);
+    //     } else {
+    //       setError("An unknown error occurred");
+    //     }
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
+    // };
 
-    fetchData();
+    // fetchData();
   }, [metamaskChainId, isConnected]);
 
   useEffect(() => {
@@ -95,9 +95,7 @@ const TransactionForm = () => {
   };
 
   const handleTokenChange = (name: string) => {
-    const token = tokensPerNetwork
-      .get(originChain)
-      ?.find((t) => t.name === name);
+    const token = tokens.find((t) => t.name === name);
     setSelectedToken(token || null);
   };
 
@@ -320,12 +318,12 @@ const TransactionForm = () => {
     }
   };
   return (
-    <form>
-      <div className="flex gap-5 justify-center mb-10">
-        <div className="justify-center">
+    <form className="w-full">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-4 lg:gap-5 justify-center items-stretch md:items-end mb-10 w-full">
+        <div className="w-full md:w-auto flex flex-col items-center">
           <Label
             id="destination"
-            className="text-primary flex justify-center text-lg"
+            className="text-primary flex justify-center text-lg mb-1 self-center md:self-auto"
           >
             Destination Chain
           </Label>
@@ -335,7 +333,7 @@ const TransactionForm = () => {
             onValueChange={handleDestinationChange}
             disabled={deactivateInput}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full max-w-xs md:max-w-none md:w-[170px] lg:w-[180px]">
               <SelectValue placeholder="Select Destination" />
             </SelectTrigger>
             <SelectContent>
@@ -352,10 +350,10 @@ const TransactionForm = () => {
             </SelectContent>
           </Select>
         </div>
-        <div className="justify-center">
+        <div className="w-full md:w-auto flex flex-col items-center">
           <Label
             id="token"
-            className="text-primary flex justify-center text-lg"
+            className="text-primary flex justify-center text-lg mb-1 self-center md:self-auto"
           >
             Token
           </Label>
@@ -365,13 +363,11 @@ const TransactionForm = () => {
             onValueChange={handleTokenChange}
             disabled={deactivateInput}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full max-w-xs md:max-w-none md:w-[170px] lg:w-[180px]">
               <SelectValue placeholder="Token" />
             </SelectTrigger>
             <SelectContent>
-              {tokensPerNetwork
-                .get(originChain)
-                ?.filter((token: Token) => token.chainId === metamaskChainId)
+              {tokens.filter((token: Token) => token.chainId === metamaskChainId)
                 .map((token: Token) => (
                   <SelectItem key={token.id} value={token.name}>
                     {token.name}
@@ -380,15 +376,15 @@ const TransactionForm = () => {
             </SelectContent>
           </Select>
         </div>
-        <div>
+        <div className="w-full md:w-auto flex flex-col items-center">
           <Label
             id="amount"
-            className="text-primary flex justify-center text-lg"
+            className="text-primary flex justify-center text-lg mb-1 self-center md:self-auto"
           >
             Amount
           </Label>
           <Input
-            className="text-primary focus:border-primary focus:border-1 border-primary placeholder:text-primary"
+            className="text-primary focus:border-primary focus:border-1 border-primary placeholder:text-primary w-full max-w-xs md:max-w-none md:w-[170px] lg:w-[180px]"
             type="number"
             onChange={handleAmountChange}
             value={amount}
@@ -396,13 +392,15 @@ const TransactionForm = () => {
             placeholder="0"
           />
         </div>
-        <Button
-          disabled={!isTransferEnabled()}
-          className="self-end text-gray-900"
-          onClick={handleTransfer}
-        >
-          Transfer
-        </Button>
+        <div className="w-full md:w-auto flex justify-center md:self-end pt-4 md:pt-0">
+          <Button
+            disabled={!isTransferEnabled()}
+            className="text-gray-900 w-full max-w-xs md:max-w-none md:w-auto px-6 md:px-4 mt-4 md:mt-0"
+            onClick={handleTransfer}
+          >
+            Transfer
+          </Button>
+        </div>
       </div>
     </form>
   );
