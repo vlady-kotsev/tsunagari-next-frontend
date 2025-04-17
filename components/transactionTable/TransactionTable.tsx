@@ -13,48 +13,58 @@ import { Skeleton } from "../ui/skeleton";
 import { Suspense } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { client } from "@/sanity/lib/client";
+import { TABLE_CONTENT_QUERY_BY_LANGUAGE } from "@/sanity/lib/queries";
+import { TableContent } from "@/sanity/lib/types";
 
 const TransactionsTable = async ({
   searchParams,
   className,
 }: {
-  searchParams: { page?: string }, className: string;
+  searchParams: { page?: string, language?:string };
+  className: string;
 }) => {
-  const currentPage = Number((await searchParams).page) || 1;
+  const {page, language} = await searchParams;
+  const currentPage = Number(page) || 1;
 
   try {
     const transfers = await DataService.getAllTransfers(currentPage);
     const { meta } = transfers;
-
+    const content: TableContent = await client.fetch(
+      TABLE_CONTENT_QUERY_BY_LANGUAGE,
+      { language: language ?? "en" }
+    );
     return (
-      <div className={`${className} flex flex-col h-[500px] sm:h-[600px] w-full`}>
+      <div
+        className={`${className} flex flex-col h-[500px] sm:h-[600px] w-full`}
+      >
         <h1 className="text-primary text-3xl sm:text-4xl md:text-5xl text-center mb-4 md:mb-6 lg:mb-10">
-          Transfers
+          {content.title}
         </h1>
         <div className="flex-1 overflow-x-auto overflow-y-auto border-2 border-primary rounded-md relative">
           <Table className="text-primary min-w-[800px] w-full">
             <TableHeader className="sticky top-0 bg-gray-900/95 backdrop-blur-sm z-10">
               <TableRow className="text-sm md:text-base lg:text-lg xl:text-xl border-b border-primary/50">
                 <TableHead className="w-[100px] text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                  User
+                  {content.user}
                 </TableHead>
                 <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                  Origin
+                  {content.origin}
                 </TableHead>
                 <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                  Destination
+                  {content.destination}
                 </TableHead>
                 <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                  Transfered Token
+                  {content.transferToken}
                 </TableHead>
                 <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                  Received Token
+                  {content.receivedToken}
                 </TableHead>
                 <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                  Amount
+                  {content.amount}
                 </TableHead>
                 <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                  Time
+                  {content.time}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -98,12 +108,12 @@ const TransactionsTable = async ({
                 variant="outline"
                 className="text-primary border-2 border-primary hover:bg-primary bg-gray-900 px-3 py-1 text-sm md:px-4 md:py-2 md:text-base"
               >
-                Previous
+                {content.previous}
               </Button>
             </Link>
           )}
           <span className="flex items-center text-primary text-sm md:text-base">
-            Page {currentPage} of {meta.totalPages}
+            ${content.page} {currentPage} / {meta.totalPages}
           </span>
           {currentPage < meta.totalPages && (
             <Link href={`?page=${currentPage + 1}`}>
@@ -111,7 +121,7 @@ const TransactionsTable = async ({
                 variant="outline"
                 className="text-primary border-2 border-primary hover:bg-primary bg-gray-900 px-3 py-1 text-sm md:px-4 md:py-2 md:text-base"
               >
-                Next
+                {content.next}
               </Button>
             </Link>
           )}

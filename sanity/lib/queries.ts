@@ -16,3 +16,37 @@ export const LOGO_QUERY_ALL = defineQuery(`*[_type == "chainLogo"]    {
   chainId
 }
 `);
+
+export const INPUT_CONTENT_QUERY_BY_LANGUAGE =
+  defineQuery(`*[_type == "inputContent" && language == $language][0] {
+  title,
+  chainInput,
+  tokenInput,
+  amountInput,
+  inputButton
+}
+`);
+
+export const TABLE_CONTENT_QUERY_BY_LANGUAGE =
+  defineQuery(`*[_type == "tableContent" && language == $language][0] {
+  title,
+  user,
+  origin,
+  destination,
+  transferToken,
+  receivedToken,
+  amount,
+  time,
+  page,
+  next,
+  previous
+}
+`);
+
+export const WALLET_CONTENT_QUERY_BY_LANGUAGE =
+  defineQuery(`*[_type == "walletContent" && language == $language][0] {
+  title,
+  connect,
+  disconnect
+}
+`);
