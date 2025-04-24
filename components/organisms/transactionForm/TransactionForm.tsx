@@ -5,18 +5,18 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/atoms/select";
 // import DataService from "@/services/data.service/data.service";
 import { Network, Token } from "@/services/data.service/interfaces";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Label } from "../../atoms/label";
+import { Input } from "../../atoms/input";
+import { Button } from "../../atoms/button";
 import { useEffect, useState } from "react";
 import { useAccount, useChainId } from "wagmi";
 import { toast } from "sonner";
 import { ethers } from "ethers";
-import bridgeAbi from "./abi/diamond.json";
-import erc20Abi from "./abi/erc20.json";
+import bridgeAbi from "../../../abi/diamond.json";
+import erc20Abi from "../../../abi/erc20.json";
 import { InputContent } from "@/sanity/lib/types";
 
 const TransactionForm = ({

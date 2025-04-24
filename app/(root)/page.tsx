@@ -1,10 +1,10 @@
-import Wallet from "@/components/wallet/Wallet";
+import Wallet from "@/components/molecules/wallet/Wallet";
 import Image from "next/image";
 import { eduFont } from "../layout";
 import Link from "next/link";
-import TransactionForm from "@/components/transactionForm/TransactionForm";
-import MouseFollower from "@/components/mouseFollower/mouseFollower";
-import TransactionsTable from "@/components/transactionTable/TransactionTable";
+import TransactionForm from "@/components/organisms/transactionForm/TransactionForm";
+import MouseFollower from "@/components/organisms/mouseFollower/mouseFollower";
+import TransactionsTable from "@/components/molecules/transactionTable/TransactionTable";
 import DataService from "@/services/data.service/data.service";
 import { Network } from "@/services/data.service/interfaces";
 import { client } from "@/sanity/lib/client";
@@ -71,12 +71,12 @@ export default async function Page({
         </section>
       </main>
       <footer className="flex w-full justify-start">
-        {(language === "en"|| language === undefined) && (
+        {(language === "en" || language === undefined) && (
           <Link className="text-primary" href={"/?language=jp"}>
             日本語
           </Link>
         )}
-        {language === "jp"  && (
+        {language === "jp" && (
           <Link className="text-primary" href={"/?language=en"}>
             English
           </Link>

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
-import { Providers } from "@/components/providers";
-import { Toaster } from "@/components/ui/sonner";
+import { Providers } from "@/app/providers/providers";
+import { Toaster } from "@/components/atoms/sonner";
 
 const bebasNeue = localFont({
   src: [

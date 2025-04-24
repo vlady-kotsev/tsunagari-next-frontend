@@ -6,12 +6,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/atoms/table";
 import { Transfer } from "@/services/data.service/interfaces";
 import DataService from "@/services/data.service/data.service";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../../atoms/skeleton";
 import { Suspense } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../atoms/button";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { TABLE_CONTENT_QUERY_BY_LANGUAGE } from "@/sanity/lib/queries";
@@ -21,10 +21,10 @@ const TransactionsTable = async ({
   searchParams,
   className,
 }: {
-  searchParams: { page?: string, language?:string };
+  searchParams: { page?: string; language?: string };
   className: string;
 }) => {
-  const {page, language} = await searchParams;
+  const { page, language } = await searchParams;
   const currentPage = Number(page) || 1;
 
   try {

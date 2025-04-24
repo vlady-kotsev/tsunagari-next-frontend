@@ -2,7 +2,7 @@
 
 import { useAccount, useChainId, useConnect, useDisconnect } from "wagmi";
 import { injected } from "wagmi/connectors";
-import { Button } from "../ui/button";
+import { Button } from "../../atoms/button";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
