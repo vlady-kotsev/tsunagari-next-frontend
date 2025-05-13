@@ -139,7 +139,7 @@ const TransactionForm = ({
         if (!window.solana) {
           throw new Error("Solana wallet no found");
         }
-      
+
         await solanaService.handleBurn(
           selectedToken,
           receiver,
@@ -261,7 +261,7 @@ const TransactionForm = ({
             id="destination"
             className="text-primary flex justify-center text-lg mb-1 self-center md:self-auto"
           >
-            Origin chain
+            {content.originInput}
           </Label>
           <Select
             name="origin"
@@ -270,7 +270,7 @@ const TransactionForm = ({
             disabled={deactivateInput}
           >
             <SelectTrigger className="w-full max-w-xs md:max-w-none md:w-[170px] lg:w-[180px]">
-              <SelectValue placeholder="Origin chain" />
+              <SelectValue placeholder={content.originInput} />
             </SelectTrigger>
             <SelectContent>
               {connected && (
@@ -327,7 +327,7 @@ const TransactionForm = ({
             id="amount"
             className="text-primary flex justify-center text-lg mb-1 self-center md:self-auto"
           >
-            Receiver
+            {content.receiverInput}
           </Label>
           <Input
             className="text-primary focus:border-primary focus:border-1 border-primary placeholder:text-primary w-full max-w-xs md:max-w-none md:w-[170px] lg:w-[180px]"
@@ -335,7 +335,7 @@ const TransactionForm = ({
             onChange={handleReceiverChange}
             value={receiver}
             disabled={deactivateInput}
-            placeholder="Receiver address"
+            placeholder={content.receiverInput}
           />
         </div>
         <div className="w-full md:w-auto flex flex-col items-center">

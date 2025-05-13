@@ -22,11 +22,13 @@ import bs58 from "bs58";
 const TransactionsTable = async ({
   searchParams,
   className,
+  lang,
 }: {
-  searchParams: { page?: string; language?: string };
+  searchParams: { page?: string };
   className: string;
+  lang: string;
 }) => {
-  const { page, language } = await searchParams;
+  const { page } = await searchParams;
   const currentPage = Number(page) || 1;
 
   try {
@@ -34,7 +36,7 @@ const TransactionsTable = async ({
     const { meta } = transfers;
     const content: TableContent = await client.fetch(
       TABLE_CONTENT_QUERY_BY_LANGUAGE,
-      { language: language ?? "en" }
+      { language: lang }
     );
 
     const formatTxUser = (tx: Transfer) => {
@@ -60,29 +62,29 @@ const TransactionsTable = async ({
         <h1 className="text-primary text-3xl sm:text-4xl md:text-5xl text-center mb-4 md:mb-6 lg:mb-10">
           {content.title}
         </h1>
-        <div className="flex-1 overflow-x-auto overflow-y-auto border-2 border-primary rounded-md relative">
+        <div className="overflow-x-auto overflow-y-auto border-2 border-primary rounded-md relative">
           <Table className="text-primary min-w-[800px] w-full">
-            <TableHeader className="sticky top-0 bg-gray-900/95 backdrop-blur-sm z-10">
+            <TableHeader className="bg-gray-900/95 backdrop-blur-sm">
               <TableRow className="text-sm md:text-base lg:text-lg xl:text-xl border-b border-primary/50">
-                <TableHead className="w-[100px] text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
+                <TableHead className="sticky top-0 z-10 w-[100px] text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap bg-gray-900/95 backdrop-blur-sm">
                   {content.user}
                 </TableHead>
-                <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
+                <TableHead className="sticky top-0 z-10 text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap bg-gray-900/95 backdrop-blur-sm">
                   {content.origin}
                 </TableHead>
-                <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
+                <TableHead className="sticky top-0 z-10 text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap bg-gray-900/95 backdrop-blur-sm">
                   {content.destination}
                 </TableHead>
-                <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
+                <TableHead className="sticky top-0 z-10 text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap bg-gray-900/95 backdrop-blur-sm">
                   {content.transferToken}
                 </TableHead>
-                <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
+                <TableHead className="sticky top-0 z-10 text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap bg-gray-900/95 backdrop-blur-sm">
                   {content.receivedToken}
                 </TableHead>
-                <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
+                <TableHead className="sticky top-0 z-10 text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap bg-gray-900/95 backdrop-blur-sm">
                   {content.amount}
                 </TableHead>
-                <TableHead className="text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
+                <TableHead className="sticky top-0 z-10 text-primary px-2 py-2 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap bg-gray-900/95 backdrop-blur-sm">
                   {content.time}
                 </TableHead>
               </TableRow>

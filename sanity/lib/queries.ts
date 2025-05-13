@@ -23,7 +23,9 @@ export const INPUT_CONTENT_QUERY_BY_LANGUAGE =
   chainInput,
   tokenInput,
   amountInput,
-  inputButton
+  inputButton,
+  receiverInput,
+  originInput
 }
 `);
 
@@ -46,6 +48,13 @@ export const TABLE_CONTENT_QUERY_BY_LANGUAGE =
 export const WALLET_CONTENT_QUERY_BY_LANGUAGE =
   defineQuery(`*[_type == "walletContent" && language == $language][0] {
   title,
+  connect,
+  disconnect
+}
+`);
+
+export const SOLANA_WALLET_CONTENT_QUERY_BY_LANGUAGE =
+  defineQuery(`*[_type == "solanaWalletContent" && language == $language][0] {
   connect,
   disconnect
 }

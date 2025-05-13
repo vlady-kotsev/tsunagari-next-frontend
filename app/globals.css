@@ -172,3 +172,7 @@ input::-webkit-inner-spin-button {
 nextjs-portal {
   display: none;
 }
+
+button.wallet-adapter-button-trigger {
+  @apply bg-primary 
+}

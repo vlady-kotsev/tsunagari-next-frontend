@@ -26,6 +26,8 @@ export interface InputContent {
   tokenInput: string;
   amountInput: string;
   inputButton: string;
+  receiverInput: string;
+  originInput: string;
 }
 
 export interface TableContent {
@@ -43,6 +45,11 @@ export interface TableContent {
 }
 
 export interface WalletContent {
+  connect: string;
+  disconnect: string;
+}
+
+export interface SolanaWalletContent {
   connect: string;
   disconnect: string;
 }

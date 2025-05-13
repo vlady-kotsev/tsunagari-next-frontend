@@ -36,6 +36,18 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "receiverInput",
+      title: "ReceiverInput",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "originInput",
+      title: "OriginInput",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "inputButton",
       title: "InputButton",
       type: "string",
