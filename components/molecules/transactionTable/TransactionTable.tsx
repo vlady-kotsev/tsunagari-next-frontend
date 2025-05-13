@@ -91,7 +91,7 @@ const TransactionsTable = async ({
                     {tx.destinationTokenAddress}
                   </TableCell>
                   <TableCell className="px-2 py-3 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                    {tx.amount}
+                    {(Number(tx.amount) / 1e18).toFixed(2)}
                   </TableCell>
                   <TableCell className="px-2 py-3 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
                     {new Date(tx.timestamp).toLocaleString()}

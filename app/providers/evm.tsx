@@ -3,19 +3,20 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { createConfig } from "wagmi";
-import { baseSepolia, taikoHekla } from "wagmi/chains";
+import { baseSepolia, taikoHekla, polygonAmoy } from "wagmi/chains";
 import { http } from "wagmi";
 import { useState } from "react";
 
-const providerConfig = createConfig({
-  chains: [baseSepolia, taikoHekla],
+export const providerConfig = createConfig({
+  chains: [baseSepolia, taikoHekla, polygonAmoy],
   transports: {
     [baseSepolia.id]: http(),
     [taikoHekla.id]: http(),
+    [polygonAmoy.id]: http(),
   },
 });
 
-export const Providers = ({ children }: { children: React.ReactNode }) => {
+export const EvmProvider = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
 
   return (

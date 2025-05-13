@@ -13,6 +13,7 @@ import {
   WALLET_CONTENT_QUERY_BY_LANGUAGE,
 } from "@/sanity/lib/queries";
 import { InputContent, WalletContent } from "@/sanity/lib/types";
+import SolanaWallet from "@/components/molecules/solanaWallet/solanaWallet";
 
 export default async function Page({
   searchParams,
@@ -52,6 +53,7 @@ export default async function Page({
         </h1>
         <div className="mt-4 md:mt-0">
           <Wallet walletContent={walletContent} />
+          <SolanaWallet />
         </div>
       </header>
       <main className="flex flex-col w-full items-center">
