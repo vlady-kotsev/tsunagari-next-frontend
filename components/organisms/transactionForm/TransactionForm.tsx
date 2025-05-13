@@ -136,10 +136,17 @@ const TransactionForm = ({
     }
     try {
       if (Number(originChain) === SOLANA_CHAIN_ID) {
-        // await handleSolanaburn();
         if (!window.solana) {
           throw new Error("Solana wallet no found");
         }
+      
+        await solanaService.handleBurn(
+          selectedToken,
+          receiver,
+          amount,
+          destinationChain,
+          window.solana
+        );
       } else {
         if (!window.ethereum) {
           throw new Error("EVM wallet no found");
@@ -352,7 +359,8 @@ const TransactionForm = ({
                 .filter((token: Token) =>
                   token.isNative
                     ? token.chainId === Number(originChain)
-                    : token.origin === destinationChain && token.chainId === Number(originChain)
+                    : token.origin === destinationChain &&
+                      token.chainId === Number(originChain)
                 )
                 .map((token: Token) => (
                   <SelectItem key={token.id} value={token.name}>

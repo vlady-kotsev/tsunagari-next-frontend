@@ -25,7 +25,6 @@ class SolanaService {
     destinationChain: number,
     windowSolana: any
   ) => {
-
     const wallet = {
       publicKey: windowSolana.publicKey,
       signTransaction: windowSolana.signTransaction.bind(windowSolana),
@@ -71,12 +70,98 @@ class SolanaService {
       })
       .accounts({
         payer: wallet.publicKey,
-        //@ts-expect-error IDL types
+        //@ts-expect-error IDL
         tokenDetails: tokenDetailsPDA,
         mint: nativeTokenMint,
         splVault: vaultPDA,
         from: userAta,
         to: vaultAtaPDA,
+        bridgeConfig: bridgeConfigPDA,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
+      .instruction();
+
+    const latestBlockhash = await this.connection.getLatestBlockhash();
+    const transaction = new web3.Transaction({
+      feePayer: wallet.publicKey,
+      blockhash: latestBlockhash.blockhash,
+      lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+    });
+
+    transaction.add(ix);
+
+    const signedTransaction = await wallet.signTransaction(transaction);
+
+    const signature = await this.connection.sendRawTransaction(
+      signedTransaction.serialize()
+    );
+
+    // Wait for confirmation
+    const confirmation = await this.connection.confirmTransaction({
+      signature,
+      blockhash: latestBlockhash.blockhash,
+      lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+    });
+
+    if (confirmation.value.err) {
+      throw new Error(
+        `Transaction failed: ${confirmation.value.err.toString()}`
+      );
+    }
+  };
+
+  handleBurn = async (
+    selectedToken: Token,
+    receiver: string,
+    amount: number,
+    destinationChain: number,
+    windowSolana: any
+  ) => {
+    const wallet = {
+      publicKey: windowSolana.publicKey,
+      signTransaction: windowSolana.signTransaction.bind(windowSolana),
+      signAllTransactions: windowSolana.signAllTransactions?.bind(windowSolana),
+      signMessage: windowSolana.signMessage?.bind(windowSolana),
+    };
+
+    const provider = new AnchorProvider(this.connection, wallet, {
+      commitment: "finalized",
+    });
+
+    const bridgeProgram: Program<BridgeSolana> = new Program(IDL, provider);
+
+    const wrappedTokenMint = new web3.PublicKey(selectedToken?.address);
+
+    const userAta = await getAssociatedTokenAddress(
+      wrappedTokenMint,
+      wallet.publicKey
+    );
+
+    const bridgeConfigPDA = pdaDeriver.bridgeConfig(bridgeProgram.programId);
+
+    const tokenDetailsPDA = pdaDeriver.tokenDetails(
+      wrappedTokenMint,
+      bridgeProgram.programId
+    );
+
+    const decimals = (await getMint(this.connection, wrappedTokenMint))
+      .decimals;
+
+    const adjustedAmount = amount * 10 ** decimals;
+
+    const ix = await bridgeProgram.methods
+      .burnWrapped({
+        amount: new BN(adjustedAmount),
+        wrappedTokenMint: wrappedTokenMint,
+        destinationChain: new BN(destinationChain),
+        destinationAddress: receiver,
+      })
+      .accounts({
+        payer: wallet.publicKey,
+        mint: wrappedTokenMint,
+        from: userAta,
+        //@ts-expect-error IDL
+        tokenDetails: tokenDetailsPDA,
         bridgeConfig: bridgeConfigPDA,
         tokenProgram: TOKEN_PROGRAM_ID,
       })
