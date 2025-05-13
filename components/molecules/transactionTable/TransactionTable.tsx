@@ -16,6 +16,8 @@ import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { TABLE_CONTENT_QUERY_BY_LANGUAGE } from "@/sanity/lib/queries";
 import { TableContent } from "@/sanity/lib/types";
+import { SOLANA_CHAIN_ID } from "@/components/consts";
+import bs58 from "bs58";
 
 const TransactionsTable = async ({
   searchParams,
@@ -34,6 +36,23 @@ const TransactionsTable = async ({
       TABLE_CONTENT_QUERY_BY_LANGUAGE,
       { language: language ?? "en" }
     );
+
+    const formatTxUser = (tx: Transfer) => {
+      if (tx.destinationChainId === SOLANA_CHAIN_ID) {
+        const userTx = tx.user.startsWith("0x") ? tx.user.slice(2) : tx.user;
+        const buffer = Buffer.from(userTx, "hex");
+
+        return bs58.encode(buffer);
+      } else if (
+        tx.originChainId !== SOLANA_CHAIN_ID &&
+        tx.destinationChainId !== SOLANA_CHAIN_ID
+      ) {
+        return `0x${tx.user.slice(-40)}`;
+      }
+
+      return tx.user;
+    };
+
     return (
       <div
         className={`${className} flex flex-col h-[500px] sm:h-[600px] w-full`}
@@ -76,7 +95,7 @@ const TransactionsTable = async ({
                   key={tx.timestamp.toString()}
                 >
                   <TableCell className="font-medium px-2 py-3 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                    {tx.user}
+                    {formatTxUser(tx)}
                   </TableCell>
                   <TableCell className="px-2 py-3 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
                     {tx.originChainId}
@@ -91,7 +110,7 @@ const TransactionsTable = async ({
                     {tx.destinationTokenAddress}
                   </TableCell>
                   <TableCell className="px-2 py-3 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
-                    {tx.amount}
+                    {(Number(tx.amount) / 1e18).toFixed(2)}
                   </TableCell>
                   <TableCell className="px-2 py-3 md:px-3 md:py-3 lg:px-4 lg:py-3 whitespace-nowrap">
                     {new Date(tx.timestamp).toLocaleString()}

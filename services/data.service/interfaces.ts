@@ -50,6 +50,8 @@ export interface Token {
   chainId: number;
   /** Whether this is the chain's native token */
   isNative: boolean;
+  /** Origin Chain ID where this token exists */
+  origin: number;
   /** URL to the token's logo image */
   logoUrl: string;
 }
