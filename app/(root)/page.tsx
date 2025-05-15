@@ -19,7 +19,7 @@ import {
   SolanaWalletContent,
   WalletContent,
 } from "@/sanity/lib/types";
-import SolanaWallet from "@/components/molecules/solanaWallet/SolanaWallet";
+import SolanaWallet from "@/components/molecules/solanaWallet/solanaWallet";
 import { LanguageToggle } from "@/components/molecules/languageToggle/LanguageToggle";
 import { cookies } from "next/headers";
 import { SOLANA_CHAIN_ID } from "@/components/consts";
